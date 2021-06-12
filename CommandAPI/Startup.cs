@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,12 @@ namespace CommandAPI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var builder = new NpgsqlConnectionStringBuilder();
+            builder.ConnectionString = Configuration.GetConnectionString("DbContextConnectionString");
+            builder.Username = Configuration["UserId"];
+            builder.Password = Configuration["Password"];
             services.AddControllers();
-            services.AddDbContext<CommandContext>(opt => opt.UseNpgsql(
-                Configuration.GetConnectionString("DbContextConnectionString")));
+            services.AddDbContext<CommandContext>(opt => opt.UseNpgsql(builder.ConnectionString));
             //services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();// dependency injection
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
         }
