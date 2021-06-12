@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CommandAPI.Migrations
 {
-    public partial class AddComandsToDb : Migration
+    public partial class AddCommandsToDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,11 +11,11 @@ namespace CommandAPI.Migrations
                 name: "CommandItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    HowTo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Platform = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CommandLine = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    HowTo = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Platform = table.Column<string>(type: "text", nullable: false),
+                    CommandLine = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

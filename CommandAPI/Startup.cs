@@ -26,9 +26,9 @@ namespace CommandAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<CommandContext>(options => options.UseSqlServer(
+            services.AddDbContext<CommandContext>(opt => opt.UseNpgsql(
                 Configuration.GetConnectionString("DbContextConnectionString")));
-            services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();// dependency injection
+            //services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();// dependency injection
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
         }
 
