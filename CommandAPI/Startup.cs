@@ -33,6 +33,7 @@ namespace CommandAPI
             services.AddControllers();
             services.AddDbContext<CommandContext>(opt => opt.UseNpgsql(builder.ConnectionString));
             //services.AddScoped<ICommandAPIRepo, MockCommandAPIRepo>();// dependency injection
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICommandAPIRepo, SqlCommandAPIRepo>();
         }
 
